@@ -87,6 +87,7 @@ EOF
     sleep 20
     clean
     write_configs(server)
+    vendorize_cookbooks
   end
   def write_configs(server)
     FileUtils.mkdir_p('keys')
@@ -104,8 +105,9 @@ EOF
     end
   end
   def clean
-    FileUtils.rm_rf('keys')
-    FileUtils.rm_rf('etc')
+    FileUtils.rm_rf("#{repo_path}/keys")
+    FileUtils.rm_rf("#{repo_path}/etc")
+    FileUtils.rm_rf("#{repo_path}/cookbooks")
   end
   def generate_secret
     cmd = Mixlib::ShellOut.new("openssl rand -base64 512 | tr -d '\r\n'")
@@ -116,6 +118,7 @@ EOF
   def uninstall_server
     server =  Machine.new('goiardi')
     server.destroy
+    clean
   end
   def knife(klass, *args)
     Chef::Config.from_file "#{repo_path}/etc/knife.rb"

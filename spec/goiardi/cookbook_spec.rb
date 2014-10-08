@@ -5,9 +5,6 @@ require 'chef/knife/cookbook_delete'
 require 'chef/knife/cookbook_upload'
 
 describe 'Cookbook' do
-  before(:all) do
-    vendorize_cookbooks
-  end
   it '#upload' do
     expect do
       knife Chef::Knife::CookbookUpload do |config|

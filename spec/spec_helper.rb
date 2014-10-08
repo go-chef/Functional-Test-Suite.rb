@@ -7,10 +7,10 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.include Helper
   config.before(:suite) do
-    #Helper.install_server
+    Helper.install_server
   end
   config.after(:suite) do
-    #Helper.install_server
+    Helper.uninstall_server
   end
   config.backtrace_exclusion_patterns = []
 end
