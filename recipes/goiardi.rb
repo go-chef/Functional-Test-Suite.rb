@@ -58,7 +58,7 @@ file '/etc/goiardi/goiardi.conf' do
   content <<EOF
 ipaddress = "#{node.ipaddress}"
 port = 4646
-hostname = "#{node.name}"
+hostname = "#{node.ipaddress}"
 log-file = "/tmp/goiardi.log"
 syslog = false
 log-level = "error"

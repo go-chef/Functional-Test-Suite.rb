@@ -97,9 +97,9 @@ EOF
 end
 
 machine =  Machine.new('goiardi')
-machine.setup
+machine.clean
 machine.start
 machine.run_recipe('recipes/goiardi.rb')
-machine.client
-machine.destroy
-
+sleep 3
+machine.setup
+#machine.destroy
