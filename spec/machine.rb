@@ -133,5 +133,6 @@ EOF
     env = Librarian::Chef::Environment.new( project_path:  repo_path)
     env.config_db.local["path"] = "#{repo_path}/cookbooks"
     Librarian::Action::Resolve.new(env).run
+    Librarian::Action::Install.new(env).run
   end
 end
