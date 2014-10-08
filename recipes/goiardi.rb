@@ -43,11 +43,12 @@ remote_file '/usr/bin/goiardi' do
   checksum '49f93992ad15a20eea626a86a9e3dbe9d2ae1779131f81a7a492a6ad6e9acf6d'
   mode 0755
 end
-
-directory '/etc/goiardi' do
-  owner 'goiardi'
-  group 'goiardi'
-  mode 0755
+%w{/etc/goiardi /var/goiardi /var/goiardi/file_checksums}.each do |dir|
+  directory dir do
+    owner 'goiardi'
+    group 'goiardi'
+    mode 0755
+  end
 end
 
 file '/etc/goiardi/goiardi.conf' do
@@ -66,6 +67,7 @@ log-level = "error"
 #freeze-interval = 120
 time-slew = "15m"
 conf-root = "/etc/goiardi"
+local-filestore-dir = "/var/goiardi/file_checksums"
 use-auth = false
 use-ssl = false
 # ssl-cert="/path/to/goiardi/conf/cert.pem"
