@@ -70,21 +70,36 @@ class Machine
     ct.stop if ct.running?
     ct.destroy if ct.defined?
   end
-end
+  def knife_config
+<<EOF
+chef_server_url 'http://#{ct.ip_addresses.first}:4646'
+client_name 'admin'
+client_key '../keys/admin.pem'
+EOF
+  end
 
-machine =  Machine.new('goiardi')
-machine.start
-machine.run_recipe('recipes/goiardi.rb')
-FileUtils.mkdir_p('keys')
-%w{admin.pem  chef-validator.pem}.each do |key|
-  File.open("keys/#{key}", 'w') do |f|
-    f.write(machine.read_file("etc/goiardi/#{key}"))
+  def setup
+    FileUtils.mkdir_p('keys')
+    FileUtils.mkdir_p('etc')
+    %w{admin.pem  chef-validator.pem}.each do |key|
+      File.open("keys/#{key}", 'w') do |f|
+        f.write(read_file("etc/goiardi/#{key}"))
+      end
+    end
+    File.open('etc/knife.rb', 'w') do |f|
+      f.write(knife_config)
+    end
+  end
+  def clean
+    FileUtils.rm_rf('keys')
+    FileUtils.rm_rf('etc')
   end
 end
 
-#knife_config = <<EOF
-#chef_server_url 'http://#{ct.ip_addresses.first}:4646'
-#client_name 'admin'
-#client_key 'admin.pem'
-#EOF
+machine =  Machine.new('goiardi')
+machine.setup
+machine.start
+machine.run_recipe('recipes/goiardi.rb')
+machine.client
+machine.destroy
 
