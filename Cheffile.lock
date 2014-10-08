@@ -1,0 +1,22 @@
+SITE
+  remote: https://supermarket.getchef.com/api/v1
+  specs:
+    apt (2.6.0)
+    build-essential (2.0.6)
+    chef-sugar (2.3.2)
+    openssl (2.0.0)
+      chef-sugar (>= 0.0.0)
+
+GIT
+  remote: https://github.com/hw-cookbooks/postgresql.git
+  ref: master
+  sha: 81300d5474bd454ba076a4330192b115bdd2c579
+  specs:
+    postgres (3.4.10)
+      apt (>= 1.9.0)
+      build-essential (>= 0.0.0)
+      openssl (>= 0.0.0)
+
+DEPENDENCIES
+  postgres (>= 0)
+
