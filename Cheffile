@@ -1,4 +1,6 @@
+
+# -*- ft:ruby -*-
 site "https://supermarket.getchef.com/api/v1"
 
-
 cookbook 'postgres', git: 'https://github.com/hw-cookbooks/postgresql.git'
+cookbook 'apache2'

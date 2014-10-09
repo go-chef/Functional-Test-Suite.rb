@@ -1,11 +1,18 @@
 SITE
   remote: https://supermarket.getchef.com/api/v1
   specs:
+    apache2 (2.0.0)
+      iptables (>= 0.0.0)
+      logrotate (>= 0.0.0)
+      pacman (>= 0.0.0)
     apt (2.6.0)
     build-essential (2.0.6)
     chef-sugar (2.3.2)
+    iptables (0.14.0)
+    logrotate (1.7.0)
     openssl (2.0.0)
       chef-sugar (>= 0.0.0)
+    pacman (1.1.1)
 
 GIT
   remote: https://github.com/hw-cookbooks/postgresql.git
@@ -18,5 +25,6 @@ GIT
       openssl (>= 0.0.0)
 
 DEPENDENCIES
+  apache2 (>= 0)
   postgres (>= 0)
 

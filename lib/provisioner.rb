@@ -3,22 +3,27 @@ require 'librarian/chef/environment'
 require 'librarian/action/resolve'
 require 'librarian/action/install'
 require_relative 'machine'
+require 'chef/config'
 
 module Provisioner
   extend self
   def repo_path
     File.expand_path('../..', __FILE__)
   end
+  def create_goiardi
+    create_server('goiardi')
+    clean
+    write_configs
+    vendorize_cookbooks
+  end
   def create_server(type)
     server =  Machine.new(type)
     server.start
     server.run_recipe("#{repo_path}/recipes/#{type}.rb")
-    sleep 20
-    clean
-    write_configs(server)
-    vendorize_cookbooks
+    sleep 10
   end
-  def write_configs(server)
+  def write_configs
+    server =  Machine.new('goiardi')
     FileUtils.mkdir_p('keys')
     FileUtils.mkdir_p('etc')
     %w{admin.pem  chef-validator.pem}.each do |key|
@@ -32,6 +37,7 @@ module Provisioner
     File.open("#{repo_path}/etc/knife.rb", 'w') do |f|
       f.write(knife_config(server))
     end
+    Chef::Config[:data_bag_path] = "#{repo_path}/data_bags"
   end
   def clean
     FileUtils.rm_rf("#{repo_path}/keys")
