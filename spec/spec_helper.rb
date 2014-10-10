@@ -7,10 +7,12 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.include Provisioner
   config.before(:suite) do
-    Provisioner.create_server('goiardi')
+    Provisioner.create_goiardi
+    Provisioner.create_server('node1')
   end
   config.after(:suite) do
     Provisioner.delete_server('goiardi')
+    Provisioner.delete_server('node1')
   end
   config.backtrace_exclusion_patterns = []
 end

@@ -11,15 +11,15 @@ module Provisioner
     File.expand_path('../..', __FILE__)
   end
   def create_goiardi
-    create_server('goiardi')
+    create_server('goiardi', 'goiardi')
     clean
     write_configs
     vendorize_cookbooks
   end
-  def create_server(type)
-    server =  Machine.new(type)
+  def create_server(name, recipe = 'chef')
+    server =  Machine.new(name)
     server.start
-    server.run_recipe("#{repo_path}/recipes/#{type}.rb")
+    server.run_recipe("#{repo_path}/recipes/#{recipe}.rb")
     sleep 10
   end
   def write_configs
@@ -75,6 +75,7 @@ module Provisioner
 chef_server_url 'http://#{server.ct.ip_addresses.first}:4646'
 node_name 'admin'
 client_key '#{repo_path}/keys/admin.pem'
+validation_key '#{repo_path}/keys/chef-validator.pem'
 EOF
   end
 end
