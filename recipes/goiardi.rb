@@ -86,7 +86,7 @@ use-serf = false
 use-shovey = false
 # sign-priv-key = "/path/to/shovey.key"
 use-mysql = false
-use-postgres = true
+use-postgresql = true
 [postgresql]
   username = "goiardi"
   host = "localhost"
