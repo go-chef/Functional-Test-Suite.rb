@@ -75,7 +75,7 @@ GEM
     fancy_irb (0.7.3)
       paint (>= 0.8.1)
       unicode-display_width (>= 0.1.1)
-    ffi (1.9.5)
+    ffi (1.11.3)
     g (1.7.2)
     hashie (2.1.2)
     highline (1.6.21)
